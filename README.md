@@ -43,7 +43,45 @@ SHOW DATABASES;
 CREATE DATABASE database_name;
 ```
 
-#### To drop a database:
+#### To drop a database
 ```sql
 DROP DATABASE database_name;
+```
+
+#### To use a database
+```sql
+USE database_name;
+```
+
+#### To check which database is being used
+```sql
+SELECT database();
+```
+
+#### To create a table
+Conventionally, _table_name_ must be pluralised
+```sql
+CREATE TABLE table_name
+  (
+    column_name data_type,
+    column_name data_type
+  );
+```
+
+#### To check if table is created
+```sql
+SHOW TABLES;
+```
+or
+```sql
+SHOW COLUMNS FROM table_name;
+```
+or
+```sql
+DESC table_name;
+```
+
+####
+```sql
+;
 ```
