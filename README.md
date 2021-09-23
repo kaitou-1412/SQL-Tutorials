@@ -9,7 +9,24 @@ I will be using **Linux Mint** for the following tutorial:
 Open Terminal and type
 ```Shell
 sudo apt install mysql-server
+```
+
+**Step 2:**
+To check that you have successfully installed mysql-server
+```Shell
 systemctl status mysql
+```
+
+**Step 3:**
+Securely establish connection using
+```Shell
+sudo mysql_secure_installation
+```
+
+## Run MySQL
+
+```Shell
+sudo mysql
 ```
 
 ## Basic Commands
