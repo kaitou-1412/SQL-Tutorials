@@ -29,6 +29,8 @@ sudo mysql_secure_installation
 sudo mysql
 ```
 
+Use '\q' or '\exit' to quit MySql.
+
 ## Basic Commands
 
 #### Show Databases
@@ -36,8 +38,12 @@ sudo mysql
 SHOW DATABASES;
 ```
 
-#### Create Database
+#### To create a database
 ```sql
-CREATE DATABASE db_name;
+CREATE DATABASE database_name;
 ```
 
+#### To drop a database:
+```sql
+DROP DATABASE database_name;
+```
