@@ -110,7 +110,7 @@ VALUES      (value, value),
 
 How to insert a string (VARCHAR) value that contains quotations ?  
 You can do it a couple of ways:  
-- Escape the quotes with a backslash: "This text has \"quotes\" in it" or 'This text has \'quotes\' in it'
+- Escape the quotes with a backslash: "This text has \\"quotes\\" in it" or 'This text has \\'quotes\\' in it'
 - Alternate single and double quotes: "This text has 'quotes' in it" or 'This text has "quotes" in it'  
 
 #### To view warnings
