@@ -172,10 +172,10 @@ CREATE TABLE table_name
 
 ## CRUD Commands
 
-**_C_reate**  
-**_R_ead**  
-**_U_pdate**  
-**_D_elete**  
+***C*****reate**  
+***R*****ead**  
+***U*****pdate**  
+***D*****elete**  
   
 ### Create
 
