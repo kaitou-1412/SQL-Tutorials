@@ -172,6 +172,140 @@ CREATE TABLE table_name
 
 ## CRUD Commands
 
+**_C_reate**  
+**_R_ead**  
+**_U_pdate**  
+**_D_elete**  
+  
+### Create
+
+#### Preparing Our Data
+
+We will be using following _cats table_ throughout this CRUD commands section
+
+```sql
+CREATE TABLE cats 
+  ( 
+     cat_id INT NOT NULL AUTO_INCREMENT, 
+     name   VARCHAR(100), 
+     breed  VARCHAR(100), 
+     age    INT, 
+     PRIMARY KEY (cat_id) 
+  ); 
+```
+
+Insert some new cats:
+
+```sql
+INSERT INTO cats(name, breed, age) 
+VALUES ('Ringo', 'Tabby', 4),
+       ('Cindy', 'Maine Coon', 10),
+       ('Dumbledore', 'Maine Coon', 11),
+       ('Egg', 'Persian', 4),
+       ('Misty', 'Tabby', 13),
+       ('George Michael', 'Ragdoll', 9),
+       ('Jackson', 'Sphynx', 7);
+```
+
+### Read
+
+#### Select all columns
+```sql
+SELECT * FROM table_name;
+```
+
+#### Select a specific column
+```sql
+SELECT column_name FROM table_name;
+```
+
+#### Select multiple columns
+```sql
+SELECT column_name1, column_name2 FROM table_name;
+```
+
+#### The WHERE clause
+```sql
+SELECT * FROM table_name WHERE condition;
+```
+'=' operator after WHERE acts as a conditional operator for equality.  
+The following _conditions_ are same:  
+name='Egg'  
+name='EGG'  
+name='eGg'  
+We observe that SQL is _case-insensitive_.  
+
+#### Aliases (Easier to read results)
+```sql
+SELECT column_name AS easier_to_read_name FROM table_name;
+```
+
+### Update
+
+#### UPDATE and SET
+```sql
+UPDATE table_name SET column_name=some_value WHERE condition;
+```
+
+'=' operator after SET acts as an assignment operator.  
+Try SELECTing before you UPDATE.  
+
+### Delete
+
+#### DELETE
+```sql
+DELETE FROM table_name WHERE condition;
+```
+
+#### Difference between DELETE and DROP
+This deletes all the entries in the table, but the shell remains intact  
+i.e. you can still use the table
+```sql
+DELETE FROM table_name;
+```
+This deletes all the entries in the table and also deletes the shell  
+i.e. the table does not exist after using DROP
+```sql
+DROP table_name;
+```
+
+## The World Of String Functions
+
+#### 
+```sql
+
+```
+
+####
+```sql
+
+```
+
+####
+```sql
+
+```
+
+####
+```sql
+
+```
+
+####
+```sql
+
+```
+
+####
+```sql
+
+```
+
+####
+```sql
+
+```
+
 ####
 ```sql
 
