@@ -228,7 +228,8 @@ SELECT column_name1, column_name2 FROM table_name;
 ```sql
 SELECT * FROM table_name WHERE condition;
 ```
-'=' operator after WHERE acts as a conditional operator for equality.  
+The '=' operator after WHERE acts as a conditional operator for equality.  
+  
 The following _conditions_ are same:  
 name='Egg'  
 name='EGG'  
@@ -247,7 +248,8 @@ SELECT column_name AS easier_to_read_name FROM table_name;
 UPDATE table_name SET column_name=some_value WHERE condition;
 ```
 
-'=' operator after SET acts as an assignment operator.  
+The '=' operator after SET acts as an assignment operator.  
+  
 Try SELECTing before you UPDATE.  
 
 ### Delete
@@ -271,47 +273,75 @@ DROP table_name;
 
 ## The World Of String Functions
 
+#### Running SQL files
+```sql
+SOURCE file_name.sql
+```
+
+#### Combine data for cleaner input
+```sql
+SELECT column_name1 AS easy_to_read_column_name1, 
+       column_name2 AS easy_to_read_column_name2, 
+       CONCAT(column_name1, seperator, column_name2) AS concatenated_column_name
+FROM table_name;
+```
+
+_seperator_: ' ', ' - ', ' , ' ...and many more.  
+
+#### Concat many columns with seperator
+```sql
+SELECT column_name1 AS easy_to_read_column_name1, 
+       column_name2 AS easy_to_read_column_name2, 
+       CONCAT_WS(seperator, column_name1, column_name2) AS concatenated_column_name
+FROM table_name;
+```
+
+#### Working with parts of strings
+```sql
+SELECT SUBSTRING(string, start_index, end_index);
+```
+
+1 based indexing  
+if end_index is not mentioned then it goes upto the last character of the string  
+  
+SUBSTR() also works  
+
+#### Replace parts of strings
+```sql
+SELECT REPLACE(string, substring_we_want_to_remove, substring_we_want_to_replace_with);
+```
+
+_substring_we_want_to_remove_ is case sensitive  
+  
+Use cmd + /  (mac)  
+or  
+ctrl + /  (pc)  
+to comment out SQL  
+  
+The REPLACE() function, as well as the other string functions, only change the query output, they don't affect the actual data in the database.  
+
+
+#### Reverse 
+```sql
+SELECT REVERSE(string);
+```
+
+#### Count characters in a string
+```sql
+SELECT CHAR_LENGTH(string);
+```
+
+[SQL Formatter](https://sql-format.com/)  
+
+#### Change a string's case
+```sql
+SELECT UPPER(string);
+SELECT LOWER(string);
+```
+
+### Refining Our Selections
+
 #### 
-```sql
-
-```
-
-####
-```sql
-
-```
-
-####
-```sql
-
-```
-
-####
-```sql
-
-```
-
-####
-```sql
-
-```
-
-####
-```sql
-
-```
-
-####
-```sql
-
-```
-
-####
-```sql
-
-```
-
-####
 ```sql
 
 ```
