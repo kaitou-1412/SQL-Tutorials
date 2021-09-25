@@ -341,12 +341,201 @@ SELECT LOWER(string);
 
 ### Refining Our Selections
 
+#### Distinct
+```sql
+SELECT DISTINCT column_name FROM table_name;
+```
+
+#### Distinct for multiple columns 
+```sql
+SELECT DISTINCT column_name1, column_name2 FROM table_name;
+```
+
+#### Sorting our results (ascending by default)
+```sql
+SELECT column_name FROM table_name ORDER BY sorted_column_name;
+```
+
+#### Sorting our results (descending)
+```sql
+SELECT column_name FROM table_name ORDER BY sorted_column_name DESC;
+```
+
+#### Shortening sorted_column_name
+```sql
+SELECT column_name1, column_name2, column_name3 FROM table_name ORDER BY 1;
+```
+
+Here _1_ can be used instead of writing column_name1, _2_ for column_name2, _3_ for column_name3 ...and so on.  
+
+#### Sort multiple columns
+```sql
+SELECT column_name1, column_name2, column_name3 FROM table_name ORDER BY column_name1, column_name2;
+```
+
+#### Limit
+```sql
+SELECT column_name FROM table_name LIMIT num;
+```
+
+#### Using Limit with Order By
+```sql
+SELECT column_name FROM table_name ORDER BY sorted_column_name DESC LIMIT start_num, end_num;
+```
+
+Here, _start_num_ is optional to use, its default value being 0 (0 based indexing)  
+Include start_num, exclude end_num, if mentioned  
+
+#### Selecting rows from a starting point to the end of the table 
+```sql
+SELECT * FROM table_name LIMIT starting_number, some_gigantic_number;
+```
+some_gigantic_number: 18446744073709551615 ...and many more.  
+
+#### Better searching
+```sql
+WHERE column_name LIKE regex;
+```
+
+'%': Wildcard (pattern matching for any number of characters)  
+regex: '%da%', '%harry%' ...and many more.  
+
+#### More Wildcards
+```sql
+WHERE column_name LIKE '____'
+```
+
+'_': Wildcard (pattern matching for eaxactly one character)  
+'\_': Underscore  
+'\%': Percentage  
+
+## Aggregate Functions
+
+#### Count 
+```sql
+SELECT COUNT(*) FROM table_name;
+```
+or
+```sql
+SELECT COUNT(column_name) FROM table_name;
+```
+or
+```sql
+SELECT COUNT(DISTINCT column_name) FROM table_name;
+```
+
+#### Group By
+```sql
+SELECT column_name, COUNT(*) FROM table_name
+GROUP BY column_name;
+```
+
+GROUP BY summarizes or aggregates identical data into single rows.  
+It is to be generally used with other aggregate funtions such as: COUNT.  
+
+#### Min and Max
+```sql
+SELECT MIN(column_name) FROM table_name;
+SELECT MAX(column_name) FROM table_name;
+```
+
+#### Subqueries
+```sql
+SELECT * FROM table_name
+WHERE column_name = (SELECT MIN(column_name) FROM table_name);
+```
+or 
+```sql
+SELECT * FROM table_name 
+ORDER BY column_name ASC LIMIT 1;
+```
+
+#### Using Min/Max with Group By
+```sql
+SELECT column_name, MAX(quantity_column_name)
+FROM table_name
+GROUP BY column_name;
+```
+
+#### Sum
+```sql
+SELECT SUM(column_name) FROM table_name;
+```
+
+#### Using Sum with Group By
+```sql
+SELECT column_name, SUM(quantity_column_name)
+FROM table_name
+GROUP BY column_name;
+```
+
+#### Average
+```sql
+SELECT AVG(column_name) FROM table_name;
+```
+
+AVG returns a floating point number upto 4 decimal places  
+
+#### Using Average with Group By
+```sql
+SELECT column_name, AVG(quantity_column_name) 
+FROM books 
+GROUP BY column_name;
+```
+
+## Data Types
+
 #### 
 ```sql
 
 ```
 
-####
+#### 
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
+#### 
 ```sql
 
 ```
