@@ -406,7 +406,7 @@ WHERE column_name LIKE '____'
 ```
 
 '\_': Wildcard (pattern matching for eaxactly one character)  
-'\\__': Underscore  
+'\\_': Underscore  
 '\\%': Percentage  
 
 ## Aggregate Functions
