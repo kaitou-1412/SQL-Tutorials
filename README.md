@@ -405,8 +405,8 @@ regex: '%da%', '%harry%' ...and many more.
 WHERE column_name LIKE '____'
 ```
 
-'_': Wildcard (pattern matching for eaxactly one character)  
-'\\_': Underscore  
+'\_': Wildcard (pattern matching for eaxactly one character)  
+'\\ _': Underscore  
 '\\%': Percentage  
 
 ## Aggregate Functions
