@@ -384,7 +384,7 @@ SELECT column_name FROM table_name ORDER BY sorted_column_name DESC LIMIT start_
 ```
 
 Here, _start_num_ is optional to use, its default value being 0 (0 based indexing)  
-Include start_num, exclude end_num, if mentioned  
+[ start_num, end_num )
 
 #### Selecting rows from a starting point to the end of the table 
 ```sql
@@ -406,8 +406,8 @@ WHERE column_name LIKE '____'
 ```
 
 '_': Wildcard (pattern matching for eaxactly one character)  
-'\_': Underscore  
-'\%': Percentage  
+'\\_': Underscore  
+'\\%': Percentage  
 
 ## Aggregate Functions
 
