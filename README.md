@@ -687,7 +687,7 @@ WHERE
 ```
 
 #### In, Not In
-Example:
+Examples:
 ```sql
 SELECT title, author_lname FROM books
 WHERE author_lname IN ('Carver', 'Lahiri', 'Smith');
