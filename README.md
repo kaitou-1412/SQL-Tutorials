@@ -485,6 +485,261 @@ GROUP BY column_name;
 
 ## Data Types
 
+#### Text (CHAR and VARCHAR)
+  
+CHAR has a fixed length.  
+  
+The length of a CHAR column is fixed to the length that you declare when you create the table.  
+  
+The length can be any value from 0 to 255.  
+  
+When CHAR values are stored, they are right-padded with spaces to the specified length.  
+  
+When CHAR values are retrieved, trailing spaces are removed unless the PAD_CHAR_TO_FULL_LENGTH SQL mode is enabled.  
+  
+CHAR is faster for fixed length text.  
+  
+Oherwise ... Use VARCHAR  
+  
+#### Numbers (INT, DECIMAL...)
+```sql
+DECIMAL(Total_Number_Of_Digits, Digits_After_Decimal)
+```
+
+#### There's also (FLOAT, DOUBLE)
+  
+Store larger numbers using less space BUT it comes at the cost of precision.  
+  
+FLOAT  
+4 Bytes of Memory Needed and ~7 digits Precision Issues  
+  
+DOUBLE  
+8 Bytes of Memory Needed and ~15 digits Precision Issues  
+  
+#### Dates & Times
+  
+DATE: 'YYYY-MM-DD' Format  
+  
+TIME: 'HH:MM:SS' Format  
+  
+DATETIME: 'YYYY-MM-DD HH:MM:SS' Format  
+  
+Some popular functions:  
+CURDATE() - gives current date  
+CURTIME() - gives current time  
+NOW() - gives current datetime  
+
+DAY()  
+DAYNAME()  
+DAYOFWEEK()  
+DAYOFYEAR()  
+
+DATE_FORMAT(_datetime_, _format_)  
+_fornat_: Week(%W), Month(%M), Year(%Y) ... and so on  
+
+#### Date Math
+Examples:
+```sql
+SELECT * FROM people;
+ 
+SELECT DATEDIFF(NOW(), birthdate) FROM people;
+ 
+SELECT name, birthdate, DATEDIFF(NOW(), birthdate) FROM people;
+ 
+SELECT birthdt FROM people;
+ 
+SELECT birthdt, DATE_ADD(birthdt, INTERVAL 1 MONTH) FROM people;
+ 
+SELECT birthdt, DATE_ADD(birthdt, INTERVAL 10 SECOND) FROM people;
+ 
+SELECT birthdt, DATE_ADD(birthdt, INTERVAL 3 QUARTER) FROM people;
+ 
+SELECT birthdt, birthdt + INTERVAL 1 MONTH FROM people;
+ 
+SELECT birthdt, birthdt - INTERVAL 5 MONTH FROM people;
+ 
+SELECT birthdt, birthdt + INTERVAL 15 MONTH + INTERVAL 10 HOUR FROM people;
+```
+
+#### Timestamps
+Examples:
+```sql
+CREATE TABLE comments (
+    content VARCHAR(100),
+    created_at TIMESTAMP DEFAULT NOW()
+);
+ 
+INSERT INTO comments (content) VALUES('lol what a funny article');
+ 
+INSERT INTO comments (content) VALUES('I found this offensive');
+ 
+INSERT INTO comments (content) VALUES('Ifasfsadfsadfsad');
+ 
+SELECT * FROM comments ORDER BY created_at DESC;
+ 
+CREATE TABLE comments2 (
+    content VARCHAR(100),
+    changed_at TIMESTAMP DEFAULT NOW() ON UPDATE CURRENT_TIMESTAMP
+);
+ 
+INSERT INTO comments2 (content) VALUES('dasdasdasd');
+ 
+INSERT INTO comments2 (content) VALUES('lololololo');
+ 
+INSERT INTO comments2 (content) VALUES('I LIKE CATS AND DOGS');
+ 
+UPDATE comments2 SET content='THIS IS NOT GIBBERISH' WHERE content='dasdasdasd';
+ 
+SELECT * FROM comments2;
+ 
+SELECT * FROM comments2 ORDER BY changed_at;
+ 
+CREATE TABLE comments2 (
+    content VARCHAR(100),
+    changed_at TIMESTAMP DEFAULT NOW() ON UPDATE NOW()
+);
+```
+
+## The Power of Logical Operators 
+
+#### Not Equal
+Example:
+```sql
+SELECT title FROM books WHERE released_year != 2017;
+```
+
+#### Not Like
+Example:
+```sql
+SELECT title FROM books WHERE title NOT LIKE 'W%';
+```
+
+#### Greater Than
+Example:
+```sql
+SELECT title, released_year FROM books 
+WHERE released_year > 2000 ORDER BY released_year;
+```
+
+#### Greater Than or Equal To
+Example:
+```sql
+SELECT title, released_year FROM books 
+WHERE released_year >= 2000 ORDER BY released_year;
+```
+
+#### Less Than
+Example:
+```sql
+SELECT title, released_year FROM books
+WHERE released_year < 2000;
+```
+
+#### Less Than or Equal To
+Example:
+```sql
+SELECT title, released_year FROM books
+WHERE released_year <= 2000;
+```
+
+#### Logical AND
+Example:
+```sql
+SELECT  
+    title, 
+    author_lname, 
+    released_year FROM books
+WHERE author_lname='Eggers' 
+    AND released_year > 2010;
+```
+
+#### Logical OR
+Example:
+```sql
+SELECT 
+    title, 
+    author_lname, 
+    released_year 
+FROM books
+WHERE author_lname='Eggers' OR released_year > 2010;
+```
+
+#### Between, Not Between
+Examples:
+```sql
+SELECT title, released_year FROM books 
+WHERE released_year BETWEEN 2004 AND 2015;
+```
+
+```sql
+SELECT title, released_year FROM books 
+WHERE released_year NOT BETWEEN 2004 AND 2015;
+```
+
+```sql
+SELECT 
+    name, 
+    birthdt 
+FROM people
+WHERE 
+    birthdt BETWEEN CAST('1980-01-01' AS DATETIME)
+    AND CAST('2000-01-01' AS DATETIME);
+```
+
+#### In, Not In
+Example:
+```sql
+SELECT title, author_lname FROM books
+WHERE author_lname IN ('Carver', 'Lahiri', 'Smith');
+```
+
+#### 
+```sql
+SELECT title, released_year FROM books
+WHERE released_year NOT IN 
+(2000,2002,2004,2006,2008,2010,2012,2014,2016);
+```
+
+#### 
+```sql
+SELECT title, released_year FROM books
+WHERE released_year >= 2000 AND
+released_year % 2 != 0 ORDER BY released_year;
+```
+
+#### Case Statements
+Example:
+```sql
+SELECT title, released_year,
+       CASE 
+         WHEN released_year >= 2000 THEN 'Modern Lit'
+         ELSE '20th Century Lit'
+       END AS GENRE
+FROM books;
+```
+
+## One To Many
+
+#### 
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
 #### 
 ```sql
 
