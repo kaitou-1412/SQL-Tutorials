@@ -866,6 +866,14 @@ CREATE TABLE orders(
 
 ## Many to Many
 
+_Examples:_  
+  
+Books - Authors  
+Blog Posts - Tags  
+Students - Classes  
+  
+Imagine we're building a **TV Show Reviewing** application  
+  
 #### Creating the reviewers table
 ```sql
 CREATE TABLE reviewers (
