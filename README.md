@@ -1027,9 +1027,114 @@ CREATE TABLE photo_tags (
 
 ### Working with lots of Instagram data
 
-#### 
+#### Find the 5 oldest users
+We want to reward our users who have been around the longest  
 ```sql
+SELECT * 
+FROM users
+ORDER BY created_at
+LIMIT 5;
+```
 
+#### What day of the week do most users register on ?
+We need to figure out when to schedule an ad campgain  
+```sql
+SELECT 
+    DAYNAME(created_at) AS day,
+    COUNT(*) AS total
+FROM users
+GROUP BY day
+ORDER BY total DESC
+LIMIT 2;
+```
+
+#### Find the users who have never posted a photo
+We want to target our inactive users with an email campaign  
+```sql
+SELECT username
+FROM users
+LEFT JOIN photos
+    ON users.id = photos.user_id
+WHERE photos.id IS NULL;
+```
+
+#### Identify most popular photo (and user who created it)
+We're running a new contest to see who can get the most likes on a single photo  
+```sql
+SELECT 
+    username,
+    photos.id,
+    photos.image_url, 
+    COUNT(*) AS total
+FROM photos
+INNER JOIN likes
+    ON likes.photo_id = photos.id
+INNER JOIN users
+    ON photos.user_id = users.id
+GROUP BY photos.id
+ORDER BY total DESC
+LIMIT 1;
+```
+
+#### Calculate average number of photos per user
+Our Investors want to know...  
+How many times does the average user post?  
+```sql
+SELECT (SELECT Count(*) 
+        FROM   photos) / (SELECT Count(*) 
+                          FROM   users) AS avg;
+```
+
+#### What are the top 5 most commonly used hashtags ?  
+A brand wants to know which hashtags to use in a post  
+```sql
+SELECT tags.tag_name, 
+       Count(*) AS total 
+FROM   photo_tags 
+       JOIN tags 
+         ON photo_tags.tag_id = tags.id 
+GROUP  BY tags.id 
+ORDER  BY total DESC 
+LIMIT  5;
+```
+
+#### Find the bots - users who have liked every single photo on the site
+We have a small problem with bots on our site...  
+Using **HAVING** keyword  
+```sql
+SELECT username, 
+       Count(*) AS num_likes 
+FROM   users 
+       INNER JOIN likes 
+               ON users.id = likes.user_id 
+GROUP  BY likes.user_id 
+HAVING num_likes = (SELECT Count(*) 
+                    FROM   photos); 
+```
+
+## Join Us (A start-up mailing list application)
+
+#### Faker (generates fake data)
+Find Faker Docs [Here](https://github.com/marak/Faker.js/)  
+  
+Step 1: Install Faker via command line  
+```Shell
+npm install faker
+```
+  
+Step 2: Require it inside of a JS file  
+```JavaScript
+var faker = require('faker');
+```
+  
+Step 3: Use Faker to Generate a new address  
+```JavaScript
+function generateAddress(){
+  console.log(faker.address.streetAddress());
+  console.log(faker.address.city());
+  console.log(faker.address.state());
+}
+generateAddress();
 ```
 
 #### 
@@ -1051,43 +1156,6 @@ CREATE TABLE photo_tags (
 ```sql
 
 ```
-
-#### 
-```sql
-
-```
-
-#### 
-```sql
-
-```
-
-#### 
-```sql
-
-```
-
-#### 
-```sql
-
-```
-
-#### 
-```sql
-
-```
-
-#### 
-```sql
-
-```
-
-#### 
-```sql
-
-```
-
-## NODE
 
 #### 
 ```sql
