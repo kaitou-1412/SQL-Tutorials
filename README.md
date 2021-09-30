@@ -1114,6 +1114,10 @@ HAVING num_likes = (SELECT Count(*)
 
 ## Join Us (A start-up mailing list application)
 
+```Shell
+npm init -y
+```
+
 #### Faker (generates fake data)
 Find Faker Docs [Here](https://github.com/marak/Faker.js/)  
   
@@ -1122,7 +1126,7 @@ Step 1: Install Faker via command line
 npm install faker
 ```
   
-Step 2: Require it inside of a JS file  
+Step 2: Require it inside of a JS file (index.js)  
 ```JavaScript
 var faker = require('faker');
 ```
@@ -1137,32 +1141,193 @@ function generateAddress(){
 generateAddress();
 ```
 
-#### 
+### Connecting Node to MySQL
+
+#### Step 1: Install the MySQL Node Package
+You can also use the _mysql_ package, but we will use _mysql2_ as it is a more recent version.  
+Open terminal and run:  
+```Shell
+npm install mysql2
+```
+
+#### Step 2: Connect to Database
+```JavaScript
+const mysql = require("mysql2")
+
+const connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : 'password',
+    database : 'join_us'
+})
+```
+  
+In case you get an error, try this:  
+```Shell
+SELECT user,authentication_string,plugin,host FROM mysql.user where user='root';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+FLUSH PRIVILEGES;
+```
+  
+#### Step 3: Run Queries 
+Running a super simple SQL query like:  
+```sql
+SELECT 1 + 1;
+```
+  
+Open _index.js_ and enter:  
+```JavaScript
+connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+   if (error) throw error;
+   console.log('The solution is: ', results[0].solution);
+})
+```
+
+### Creating our Schema 
+
+Create _schema.sql_ and enter the following queries in it:  
+
+#### Creating Our Users Table 
+```sql
+CREATE TABLE users (
+    email VARCHAR(255) PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+#### Insert users
+```sql
+INSERT INTO users (email) VALUES('Katie34@yahoo.com'), ('Tunde@gmail.com');
+```
+
+#### Run our sql file
+```sql
+SOURCE schema.sql
+```
+
+#### Check that users are added
+```sql
+SELECT * FROM users;
+```
+
+#### To SELECT all users from database:
+```JavaScript
+const q = "SELECT * FROM users"
+connection.query(q, function(error, results, fields){
+    if(error) throw error;
+    console.log(results);
+})
+connection.end()
+```
+
+#### Inserting using Node
+Add this piece of code before you select all users from database  
+```JavaScript
+const person = {
+    email: faker.internet.email(),
+    created_at: faker.date.past()
+};
+ 
+const end_result = connection.query('INSERT INTO users SET ?', person, function(err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+```
+
+#### Bulk Inserting 500 Users
+```JavaScript
+const data = [];
+for(let i = 0; i < 500; i++) {
+    data.push([
+        faker.internet.email(),
+        faker.date.past()
+    ]);
+}
+const q = 'INSERT INTO users (email, created_at) VALUES ?';
+ 
+connection.query(q, [data], function(err, result) {
+  console.log(err);
+  console.log(result);
+});
+ 
+connection.end();
+```
+
+#### View Users
+```sql
+SELECT * FROM users;
+```
+
+### 500 Users Exercise
+
+#### Find Earliest Date A User Joined
+```sql
+SELECT 
+    DATE_FORMAT(MIN(created_at), "%M %D %Y") as earliest_date 
+FROM users;
+```
+
+#### Find Email Of The First/Earliest User (HINT: SUBQUERY)
+```sql
+SELECT * 
+FROM   users 
+WHERE  created_at = (SELECT Min(created_at) 
+                     FROM   users);
+```
+
+#### Show Users According To The Month They Joined
+```sql
+SELECT Monthname(created_at) AS month, 
+       Count(*)              AS count 
+FROM   users 
+GROUP  BY month 
+ORDER  BY count DESC;
+```
+
+#### Count Number of Users With Yahoo Emails
+```sql
+SELECT Count(*) AS yahoo_users 
+FROM   users 
+WHERE  email LIKE '%@yahoo.com';
+```
+
+#### Calculate Total Number of Users for Each Email Host
+```sql
+SELECT CASE 
+         WHEN email LIKE '%@gmail.com' THEN 'gmail' 
+         WHEN email LIKE '%@yahoo.com' THEN 'yahoo' 
+         WHEN email LIKE '%@hotmail.com' THEN 'hotmail' 
+         ELSE 'other' 
+       end      AS provider, 
+       Count(*) AS total_users 
+FROM   users 
+GROUP  BY provider 
+ORDER  BY total_users DESC;
+```
+
+### Moving on to the WebApp
+
+####
 ```sql
 
 ```
 
-#### 
+####
 ```sql
 
 ```
 
-#### 
+####
 ```sql
 
 ```
 
-#### 
+####
 ```sql
 
 ```
 
-#### 
-```sql
-
-```
-
-#### 
+####
 ```sql
 
 ```
