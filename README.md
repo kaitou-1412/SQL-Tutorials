@@ -1414,72 +1414,91 @@ app.use(bodyParser.urlencoded({
 }));
 ```
 
-####
+## Database Triggers
+SQL statements that are AUTOMATICALLY RUN when a specific table is changed  
+#### Syntax
 ```sql
+CREATE TRIGGER trigger_name 
+    trigger_time trigger_event ON table_name FOR EACH ROW
+    BEGIN
+    ...
+    END;
+```
+trigger_time: BEFORE, AFTER
+trigger_event: INSERT, UPDATE, DELETE
+ON
+table_name: photos, users  
 
+#### A simple validation
+```sql
+DELIMITER $$
+
+CREATE TRIGGER must_be_adult
+     BEFORE INSERT ON users FOR EACH ROW
+     BEGIN
+          IF NEW.age < 18
+          THEN
+              SIGNAL SQLSTATE '45000'
+                    SET MESSAGE_TEXT = 'Must be an adult!';
+          END IF;
+     END;
+$$
+
+DELIMITER ;
+```
+NEW.age: Refers to data that is about to be inserted  
+  
+**MySQL Errors**
+A numeric error code (1146). This number is MySQL-specific  
+  
+A five-character SQLSTATE value ('42S02').  
+The values are taken from ANSI SQL and ODBC and are more standardized.  
+  
+A message string - textual description of the error  
+  
+#### Preventing Self-Follows 
+```sql
+DELIMITER $$
+
+CREATE TRIGGER example_cannot_follow_self
+     BEFORE INSERT ON follows FOR EACH ROW
+     BEGIN
+          IF NEW.follower_id = NEW.followee_id
+          THEN
+               SIGNAL SQLSTATE '45000'
+                    SET MESSAGE_TEXT = 'Cannot follow yourself, silly';
+          END IF;
+     END;
+$$
+
+DELIMITER ;
 ```
 
-####
+#### Logging Unfollows
 ```sql
+DELIMITER $$
 
+CREATE TRIGGER create_unfollow
+    AFTER DELETE ON follows FOR EACH ROW 
+BEGIN
+    INSERT INTO unfollows
+    SET follower_id = OLD.follower_id,
+        followee_id = OLD.followee_id;
+END$$
+
+DELIMITER ;
 ```
 
-#### 
-```sql
+### Managing Triggers
 
+#### Listing Triggers
+```sql
+SHOW TRIGGERS;
 ```
 
-####
+#### Removing Triggers
 ```sql
-
+DROP TRIGGER trigger_name;
 ```
-
-####
-```sql
-
-```
-
-#### 
-```sql
-
-```
-
-####
-```sql
-
-```
-
-####
-```sql
-
-```
-
-#### 
-```sql
-
-```
-
-####
-```sql
-
-```
-
-####
-```sql
-
-```
-
-#### 
-```sql
-
-```
-
-####
-```sql
-
-```
-
-####
-```sql
-
-```
+**A WORD OF WARNING  
+Triggers can make debugging hard!**  
