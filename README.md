@@ -1305,9 +1305,126 @@ GROUP  BY provider
 ORDER  BY total_users DESC;
 ```
 
-### Moving on to the WebApp
+### Moving on to the WebApp 
+
+**Working with express**
+```Shell
+npm i express
+```
+
+#### Add to your index.js file
+```JavaScript
+const express = require('express');
+const app = express();
+
+app.get("/", function(req, res){
+ res.send("HELLO FROM OUR WEB APP!");
+});
+ 
+app.listen(8080, function () {
+ console.log('App listening on port 8080!');
+});
+```
+
+#### Remember to start the server up
+```Shell
+node index.js
+```
+
+#### Adding Multiple Routes
+  
+Add a '/joke' route:  
+```JavaScript
+app.get("/joke", function(req, res){
+ const joke = "What do you call a dog that does magic tricks? A labracadabrador.";
+ res.send(joke);
+});
+```
+  
+Add a '/random_num' route:  
+```JavaScript
+app.get("/random_num", function(req, res){
+ const num = Math.floor((Math.random() * 10) + 1);
+ res.send("Your lucky number is " + num);
+});
+```
+
+#### Connecting Express and MySQL
+Add the MySQL code inside of the root route:  
+```JavaScript
+app.get("/", function(req, res) {
+   const q = 'SELECT COUNT(*) as count FROM users';
+   connection.query(q, function (error, results) {
+       if (error) throw error;
+       var msg = "We have " + results[0].count + " users";
+       res.send(msg);
+   });
+});
+```
+
+#### Adding EJS Templates
+```Shell
+npm i ejs
+```
+
+```html
+<h1>JOIN US</h1>
+ 
+<p class="lead">Enter your email to join <strong><%= count %></strong> 
+others on our waitlist. We are 100% not a cult. </p>
+ 
+<form method="POST" action='/register'>
+ <input type="text" class="form" name="email" placeholder="Enter Your Email">
+ <button>Join Now</button>
+</form>
+```
+
+#### Connecting the Form
+The '/register' post route:  
+```JavaScript
+app.post('/register', function(req,res) {
+     var person = {email: req.body.email};
+     connection.query('INSERT INTO users SET ?', person, function(err, result) {
+         console.log(err);
+         console.log(result);
+         res.redirect("/");
+     });
+});
+```
+
+#### Using Body Parser
+Want **zero warnings** ?  
+```JavaScript
+// Express v4.16.0 and higher
+// --------------------------
+const express = require('express');
+
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
+
+// For Express version less than 4.16.0
+// ------------------------------------
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+```
 
 ####
+```sql
+
+```
+
+####
+```sql
+
+```
+
+#### 
 ```sql
 
 ```
@@ -1318,6 +1435,41 @@ ORDER  BY total_users DESC;
 ```
 
 ####
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
+####
+```sql
+
+```
+
+####
+```sql
+
+```
+
+#### 
+```sql
+
+```
+
+####
+```sql
+
+```
+
+####
+```sql
+
+```
+
+#### 
 ```sql
 
 ```
